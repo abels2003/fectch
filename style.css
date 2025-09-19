@@ -1,0 +1,14 @@
+body {
+    background: linear-gradient(to right, #74ebd5, #acb6e5);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.weather-icon {
+    width: 100px;
+    margin-top: 10px;
+}

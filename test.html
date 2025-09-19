@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <!-- <style>
+        .highlight{
+            background-color: brown;
+        }
+    </style> -->
+</head>
+<style>
+    .abel{
+        background-color: black;
+        color: white;
+    }
+</style>
+<body>
+    <div id="container">
+        <p>abel is</p>
+    </div>
+<button id="btn1">click here</button>  
+    <script>
+        $("#btn1").click(function()
+{
+  $("#container p").append('very handsome').addClass("abel")
+});
+
+//    $("button").click(function(){
+//     $("p").hide(); }); });
+// $("#attributeFilter").click(function () {   
+//       $("input[type='text']").css("background-color", "#ffeb3b");
+//      });
+
+//      $("#attributeFilter").click(function () {   
+//       $("input[type='text']").css("background-color", "#ffeb3b");
+//      });
+// $("#highlightSiblings").click(function () { $("ul").next().addClass("highlight"); }); 
+
+    </script>
+</body>
+</html>  

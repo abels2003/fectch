@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>WeatherNow+</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+  <style>
+    body {
+      background: linear-gradient(to right, #74ebd5, #acb6e5);
+      font-family: 'Segoe UI', sans-serif;
+      min-height: 100vh;
+      transition: background 0.5s ease;
+    }
+    .weather-icon {
+      width: 100px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container text-center mt-4">
+    <h1 class="text-light">🌤️ WeatherNow+</h1>
+    <div class="input-group mb-3 w-75 mx-auto">
+      <input type="text" id="cityInput" class="form-control" placeholder="Enter city name" />
+      <button class="btn btn-primary" onclick="getWeather()">Search</button>
+    </div>
+    <div id="recentSearches" class="mb-3 text-light"></div>
+    <div id="weatherCard" class="card p-4 shadow-sm d-none">
+      <h2 id="cityName" class="text-info"></h2>
+      <h3 id="temperature"></h3>
+      <p id="description" class="lead"></p>
+      <img id="weatherIcon" class="weather-icon" />
+    </div>
+    <div id="hourlyForecast" class="text-light mt-4"></div>
+    <div id="dailyForecast" class="text-light mt-4"></div>
+  </div>
+  <div>
+  <div id="liveConditionsCard" class="card p-4 shadow-sm d-none mt-3">
+  <h4 class="text-primary">Live Weather Conditions</h4>
+  <ul class="list-group list-group-flush text-start">
+    <li class="list-group-item">🌬️ Wind Speed: <span id="windSpeed"></span> m/s</li>
+    <li class="list-group-item">💧 Humidity: <span id="humidity"></span>%</li>
+    <li class="list-group-item">🌡️ Feels Like: <span id="feelsLike"></span>°C</li>
+    <li class="list-group-item">🔽 Pressure: <span id="pressure"></span> hPa</li>
+    <li class="list-group-item">👁️ Visibility: <span id="visibility"></span> meters</li>
+  </ul>
+</div>
+</div>
+<script>
+  async function getWeather() {
+    const city = document.getElementById("cityInput").value.trim();
+    if (!city) return;
+
+    const apiKey = 'a653d04e9b424944ae484554251509'; 
+    const url = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city},Kerala&aqi=no`;
+
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      document.getElementById("weatherCard").classList.remove("d-none");
+      document.getElementById("cityName").textContent = data.location.name;
+      document.getElementById("temperature").textContent = `${Math.round(data.current.temp_c)}°C`;
+      document.getElementById("description").textContent = data.current.condition.text;
+      document.getElementById("weatherIcon").src = "https:" + data.current.condition.icon;
+
+      document.getElementById("liveConditionsCard").classList.remove("d-none");
+      document.getElementById("windSpeed").textContent = data.current.wind_kph;
+      document.getElementById("humidity").textContent = data.current.humidity;
+      document.getElementById("feelsLike").textContent = Math.round(data.current.feelslike_c);
+      document.getElementById("pressure").textContent = data.current.pressure_mb;
+      document.getElementById("visibility").textContent = data.current.vis_km * 1000;
+
+      updateRecentSearches(city);
+    } catch (error) {
+      console.error('Fetch error:', error);
+      alert("Could not fetch weather data. Make sure the city is valid and in Kerala.");
+    }
+  }
+
+  function updateRecentSearches(city) {
+    if (!city) return;
+    let searches = JSON.parse(localStorage.getItem("recentSearches")) || [];
+    if (!searches.includes(city)) {
+      searches.unshift(city);
+      if (searches.length > 5) searches.pop();
+      localStorage.setItem("recentSearches", JSON.stringify(searches));
+    }
+
+    document.getElementById("recentSearches").innerHTML =
+      "<strong>Recent:</strong> " + searches.join(", ");
+  }
+  
+  window.onload = () => {
+    updateRecentSearches("");
+  };
+
+</script>
+</body>
+</html>
+

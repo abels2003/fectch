@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WeatherNow</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container text-center mt-5">
+        <h1 class="mb-4 text-primary">🌤️ WeatherNow</h1>
+        <div class="input-group mb-3 w-75 mx-auto">
+            <input type="text" id="cityInput" class="form-control" placeholder="Enter city name" />
+            <button class="btn btn-primary" onclick="getWeather()">Get Weather</button>
+        </div>
+
+        <div id="weatherCard" class="card p-4 shadow-sm d-none">
+            <h2 id="cityName" class="text-info"></h2>
+            <h3 id="temperature"></h3>
+            <p id="description" class="lead"></p>
+            <img id="weatherIcon" src="" alt="Weather Icon" class="weather-icon">
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
